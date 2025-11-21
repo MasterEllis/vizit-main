@@ -1,4 +1,19 @@
 
+    
+    setInterval(tic,1000);
+    let x=0
+    let y=document.getElementById("h");
+
+function tic(){
+    let d=new Date()
+    let hours=23-d.getHours()
+    
+    y.innerHTML=hours+":";
+    
+    d.getMinutes()
+    d.getSeconds()
+   
+}
     let tirSize,
     pricePaper = 0,
     priceForma = 0,
@@ -25,10 +40,17 @@
     let span_sum=document.getElementById("final_price");
     insertPaper();
     function insertPaper(){
+       fetch('https://691ff1f331e684d7bfcb203e.mockapi.io/api/vizitki/papers')
+      .then(response => {
+        console.log(response)
+        return response.json()})
+      .then(data => {
         let html="";
-        for (type in typePaper)
-            html += '<option value="' + type + '">' + type + "</option>";
-       select_papper.innerHTML=html;
+        for (type of data)
+         html += '<option value="' + type.price + '">' + type.title + "</option>";
+        select_papper.innerHTML=html;
+    }) 
+  
     }
   insertColor();
     function insertColor(){
@@ -38,7 +60,8 @@
       select_color.innerHTML=html;
     
     }
-    let calk=document.querySelector(".calk");
+
+    let calk=document.querySelector(".calk"); 
     calk.onchange=calculate;
     function calculate(){
         tirSize=input_count.value/30;
